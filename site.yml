@@ -3,12 +3,14 @@
   become: true
   tasks:
     - name: install updates for ubuntu
+      tags: always
       ansible.builtin.apt:
         upgrade: dist
         update_cache: yes
       when: ansible_distribution == "Ubuntu"
 
     - name: install updates for fedora
+      tags: always
       ansible.builtin.dnf:
         use_backend: dnf4
         update_only: yes
@@ -20,6 +22,7 @@
   become: true
   tasks:
     - name: install apache on web servers
+      tags: apache,ubuntu
       ansible.builtin.apt:
         name:
           - apache2
@@ -30,6 +33,7 @@
   become: true
   tasks:
     - name: install mariadb package on db servers
+      tags: db,fedora
       ansible.builtin.dnf:
         name: mariadb-server
         use_backend: dnf4
